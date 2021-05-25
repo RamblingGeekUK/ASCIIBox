@@ -11,12 +11,12 @@ Function CreateBoxText() {
 
     param
     (
-        [string[]]$text
+        [string[]]$msg,[string]$title
     )
-        $maxLength = 0
+        $maxLength = $Host.UI.RawUI.WindowSize.Width - 2
         $lineCount = 0
-        $_ -split "`r`n" | ForEach-Object {
-            $text += $_
+        $msg -split "`r`n" | ForEach-Object {
+            $text += $msg
             If ($text[$lineCount].Length -gt $maxLength) {
                 $maxLength = $text[$lineCount].Length
             }
@@ -24,10 +24,11 @@ Function CreateBoxText() {
         }
         
         # Title 
-        $title = "This is a box title in the middle - yey!"
+        #$title = "jfjfdfdjfsdjlkjfjsdkljfklsdlfkljfljsjfklfjkdjfkl"
+
         $TopLeftBoxChar + ($HorizontalBoxChar * ($maxLength)) + $TopRightBoxChar
         
-        Write-Host ("{0}{1}" -f ($VerticalBoxChar + ' ' * (([Math]::Max(0, $Host.UI.RawUI.BufferSize.Width / 2) - [Math]::Floor($title.Length / 2)))), $title)
+        Write-Host ("{0}{1}{2}" -f ($VerticalBoxChar + ' ' * (([Math]::Max(0, $Host.UI.RawUI.BufferSize.Width / 2) - [Math]::Floor($title.Length / 2)))), $title, $VerticalBoxChar.PadLeft($Host.UI.RawUI.WindowSize.Width / 2 + $title.Length))
         
         $HorizontalJoinCharLeft + ($HorizontalBoxChar * ($maxLength)) + $HorizontalJoinCharRight
 
