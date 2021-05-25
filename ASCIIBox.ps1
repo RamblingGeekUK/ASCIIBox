@@ -28,7 +28,7 @@ Function CreateBoxText() {
 
         $TopLeftBoxChar + ($HorizontalBoxChar * ($maxLength)) + $TopRightBoxChar
         
-        Write-Host ("{0}{1}{2}" -f ($VerticalBoxChar + ' ' * (([Math]::Max(0, $Host.UI.RawUI.BufferSize.Width / 2) - [Math]::Floor($title.Length / 2)))), $title, $VerticalBoxChar.PadLeft($Host.UI.RawUI.WindowSize.Width / 2 + $title.Length))
+        Write-HostCenter -Message $title
         
         $HorizontalJoinCharLeft + ($HorizontalBoxChar * ($maxLength)) + $HorizontalJoinCharRight
 
@@ -40,4 +40,10 @@ Function CreateBoxText() {
         $BottomLeftBoxChar + ($HorizontalBoxChar * ($maxLength)) + $BottomRightBoxChar
     }  
 
-function Write-HostCenter { param($Message) Write-Host ("{0}{1}" -f (' ' * (([Math]::Max(0, $Host.UI.RawUI.BufferSize.Width / 2) - [Math]::Floor($Message.Length / 2)))), $Message) }
+
+    
+
+function Write-HostCenter { 
+    param($Message)
+    Write-Host ("{0}{1}" -f ($VerticalBoxChar + ' ' * (([Math]::Max(0, $Host.UI.RawUI.BufferSize.Width / 2) - [Math]::Floor($Message.Length / 2)))), $Message.PadRight($Host.UI.RawUI.BufferSize.Width / 2 + $Message.Length / 2 - 2)  + $VerticalBoxChar)
+}
